@@ -1,5 +1,6 @@
 import { Component } from "react";
 import Board from "./Components/Board";
+import './App.css';
 
 class Game extends Component {
   constructor(props) {
@@ -49,10 +50,25 @@ class Game extends Component {
       `Go to #${move}` :
       `Go to game start`;
 
+      console.log(move,this.state.stepNumber, (move === this.state.stepNumber));
       return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
-        </li>
+        move !== this.state.stepNumber ?
+        (
+          <li key={move}>
+            <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          </li>
+        ) :
+        (
+          <li key={move}>
+            <button 
+              onClick={() => this.jumpTo(move)}
+              className="bold-text"
+            >
+              {desc}
+            </button>
+          </li>
+        )
+        
       )
     });
 
