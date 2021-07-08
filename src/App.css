@@ -40,3 +40,7 @@
 .bold-text {
   font-weight: bold;
 }
+
+.paint-line {
+  background-color: rgb(91, 214, 91);
+}

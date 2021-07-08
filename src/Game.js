@@ -18,7 +18,7 @@ class Game extends Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
+    if (calculateWinner(squares)[0] || squares[i]) {
       return;
     }
     squares[i] = this.state.xIsNext ? "X" : "O";
@@ -43,14 +43,13 @@ class Game extends Component {
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
+    const [winner, winnerLine] = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
       const desc = move ?
       `Go to #${move}` :
       `Go to game start`;
 
-      console.log(move,this.state.stepNumber, (move === this.state.stepNumber));
       return (
         move !== this.state.stepNumber ?
         (
@@ -84,6 +83,7 @@ class Game extends Component {
         <div className="game-board">
           <Board
             squares={current.squares}
+            winnerLine={winnerLine}
             onClick={i => this.handleClick(i)}
           />
         </div>
@@ -110,10 +110,10 @@ const calculateWinner = (squares) => {
   for(const line of lines) {
     const [a, b, c] = line
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return [squares[a], line];
     }
   }
-  return null;
+  return [null, null];
 }
 
 export default Game;
